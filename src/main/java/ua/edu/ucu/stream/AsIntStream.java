@@ -36,7 +36,7 @@ public class AsIntStream implements IntStream {
 
     @Override
     public Double average() {
-        return (double) (sum() / count());
+        return (sum() / (double) count());
     }
 
     private void ifStreamIsEmpty() {

@@ -60,7 +60,7 @@ public class AsIntStreamTest {
     @Test
     public void testAverageLarge() {
         double result = intStreamLarge.average();
-        assertEquals(50.0, result, 0.00001);
+        assertEquals(50.5, result, 0.00001);
     }
 
 
