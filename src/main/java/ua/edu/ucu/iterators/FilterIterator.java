@@ -5,19 +5,21 @@ import ua.edu.ucu.function.IntPredicate;
 import java.util.Iterator;
 
 public class FilterIterator implements Iterator<Integer> {
-    private Iterator<Integer> iterator;
-    private IntPredicate predicate;
-    private int value;
+    private final IntPredicate predicate;
+    private final Iterator<Integer> prevIterator;
+    private int number;
 
-    public FilterIterator(Iterator<Integer> mainIterator, IntPredicate predicate) {
-        this.iterator = mainIterator;
+    public FilterIterator(Iterator<Integer> prevIterator, IntPredicate predicate) {
         this.predicate = predicate;
+        this.prevIterator = prevIterator;
     }
+
     @Override
     public boolean hasNext() {
-        while (iterator.hasNext()) {
-            value = iterator.next();
-            if (predicate.test(value)) {
+        while (prevIterator.hasNext()) {
+            number = prevIterator.next();
+
+            if (predicate.test(number)) {
                 return true;
             }
         }
@@ -26,6 +28,6 @@ public class FilterIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        return value;
+        return number;
     }
 }

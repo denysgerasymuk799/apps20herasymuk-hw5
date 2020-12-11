@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class StreamIntIterator implements Iterator<Integer> {
-    private List<Integer> items;
+    private final List<Integer> items;
     private int idx;
     private int size = 0;
 
@@ -27,13 +27,13 @@ public class StreamIntIterator implements Iterator<Integer> {
         }
     }
 
-    public int size() {
-        return size;
-    }
-
     @Override
     public boolean hasNext() {
-        return idx < size;
+        if (idx < size) {
+            return true;
+        }
+        idx = 0;
+        return false;
     }
 
     @Override

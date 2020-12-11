@@ -5,45 +5,37 @@ import ua.edu.ucu.comparators.MaxComparator;
 import ua.edu.ucu.comparators.MinComparator;
 import ua.edu.ucu.function.*;
 import ua.edu.ucu.iterators.FilterIterator;
+import ua.edu.ucu.iterators.FlatMapIterator;
+import ua.edu.ucu.iterators.MapIterator;
 import ua.edu.ucu.iterators.StreamIntIterator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 
 public class AsIntStream implements IntStream {
     private Iterator<Integer> itemsIterator;
 
     private AsIntStream(Iterator<Integer> iterator) {
-//        items = new ArrayList<>();
-//        for (int val: values) {
-//            items.add(val);
-//        }
-
         itemsIterator = iterator;
     }
 
     public static IntStream of(int... values) {
+        if (values.length == 0) {
+            throw new IllegalArgumentException("you can not create stream of no elements");
+        }
+
         return new AsIntStream(new StreamIntIterator(values));
     }
 
     @Override
     public Double average() {
-//        ifStreamIsEmpty();
-
-//        int sum = 0;
-//        while (itemsIterator.hasNext()) {
-//            sum += itemsIterator.next();
-//        }
-
         return (double) (sum() / count());
     }
 
-    public void ifStreamIsEmpty() {
+    private void ifStreamIsEmpty() {
         if (!itemsIterator.hasNext()) {
             throw new IllegalArgumentException("Array is empty");
-        };
+        }
     }
 
     private Integer findSpecialValue(int startValue, Comparator comparator) {
@@ -87,22 +79,24 @@ public class AsIntStream implements IntStream {
 
     @Override
     public IntStream filter(IntPredicate predicate) {
-        return new AsIntStream(new FilterIterator(this.itemsIterator, predicate));
+        return new AsIntStream(new FilterIterator(itemsIterator, predicate));
     }
 
     @Override
     public void forEach(IntConsumer action) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while (itemsIterator.hasNext()) {
+            action.accept(itemsIterator.next());
+        }
     }
 
     @Override
     public IntStream map(IntUnaryOperator mapper) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new AsIntStream(new MapIterator(itemsIterator, mapper));
     }
 
     @Override
     public IntStream flatMap(IntToIntStreamFunction func) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new AsIntStream(new FlatMapIterator(itemsIterator, func));
     }
 
     @Override
@@ -121,11 +115,9 @@ public class AsIntStream implements IntStream {
     public int[] toArray() {
         int[] result = new int[(int) count()];
         int idx = 0;
-        Integer item;
 
         while (itemsIterator.hasNext()) {
-            item = itemsIterator.next();
-            result[idx++] = item;
+            result[idx++] = itemsIterator.next();
         }
         return result;
     }
