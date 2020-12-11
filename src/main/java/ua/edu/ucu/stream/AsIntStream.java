@@ -3,7 +3,13 @@ package ua.edu.ucu.stream;
 import ua.edu.ucu.comparators.Comparator;
 import ua.edu.ucu.comparators.MaxComparator;
 import ua.edu.ucu.comparators.MinComparator;
-import ua.edu.ucu.function.*;
+
+import ua.edu.ucu.function.IntBinaryOperator;
+import ua.edu.ucu.function.IntConsumer;
+import ua.edu.ucu.function.IntPredicate;
+import ua.edu.ucu.function.IntToIntStreamFunction;
+import ua.edu.ucu.function.IntUnaryOperator;
+
 import ua.edu.ucu.iterators.FilterIterator;
 import ua.edu.ucu.iterators.FlatMapIterator;
 import ua.edu.ucu.iterators.MapIterator;
@@ -21,7 +27,8 @@ public class AsIntStream implements IntStream {
 
     public static IntStream of(int... values) {
         if (values.length == 0) {
-            throw new IllegalArgumentException("you can not create stream of no elements");
+            throw new IllegalArgumentException(
+                    "you can not create stream of no elements");
         }
 
         return new AsIntStream(new StreamIntIterator(values));

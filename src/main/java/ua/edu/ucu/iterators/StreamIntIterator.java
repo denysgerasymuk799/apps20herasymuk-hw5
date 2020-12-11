@@ -38,7 +38,7 @@ public class StreamIntIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        if(this.hasNext()) {
+        if (this.hasNext()) {
             return items.get(idx++);
         }
         return null;

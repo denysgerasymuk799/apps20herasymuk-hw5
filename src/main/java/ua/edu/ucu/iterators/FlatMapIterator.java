@@ -11,7 +11,8 @@ public class FlatMapIterator implements Iterator<Integer> {
     private final IntToIntStreamFunction operator;
 
 
-    public FlatMapIterator(Iterator<Integer> prevIterator, IntToIntStreamFunction operator) {
+    public FlatMapIterator(Iterator<Integer> prevIterator,
+                           IntToIntStreamFunction operator) {
         this.prevIterator = prevIterator;
         this.operator = operator;
         this.iterator = new StreamIntIterator();
@@ -23,7 +24,8 @@ public class FlatMapIterator implements Iterator<Integer> {
             // there is no error when we get next intStream before next function
             // as we use generally hasNext function in cycle
             if (prevIterator.hasNext()) {
-                IntStream intStream = operator.applyAsIntStream(prevIterator.next());
+                IntStream intStream = operator.applyAsIntStream(
+                        prevIterator.next());
                 iterator = new StreamIntIterator(intStream.toArray());
                 return true;
             }

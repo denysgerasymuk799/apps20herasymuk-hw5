@@ -9,7 +9,8 @@ public class FilterIterator implements Iterator<Integer> {
     private final Iterator<Integer> prevIterator;
     private int number;
 
-    public FilterIterator(Iterator<Integer> prevIterator, IntPredicate predicate) {
+    public FilterIterator(Iterator<Integer> prevIterator,
+                          IntPredicate predicate) {
         this.predicate = predicate;
         this.prevIterator = prevIterator;
     }
