@@ -36,6 +36,9 @@ public class AsIntStream implements IntStream {
 
     @Override
     public Double average() {
+        // here I do not use IllegalArgumentException
+        // as I also use it in sum() function and do not make
+        // duplicates
         return (sum() / (double) count());
     }
 
@@ -59,6 +62,9 @@ public class AsIntStream implements IntStream {
 
     @Override
     public Integer max() {
+        // here I do not use IllegalArgumentException
+        // as I also use it in findSpecialValue() function and do not make
+        // duplicates
         return findSpecialValue(Integer.MIN_VALUE, new MaxComparator());
     }
 
@@ -121,8 +127,8 @@ public class AsIntStream implements IntStream {
     @Override
     public int[] toArray() {
         int[] result = new int[(int) count()];
-        int idx = 0;
 
+        int idx = 0;
         while (itemsIterator.hasNext()) {
             result[idx++] = itemsIterator.next();
         }

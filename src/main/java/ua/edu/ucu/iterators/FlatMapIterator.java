@@ -13,9 +13,9 @@ public class FlatMapIterator implements Iterator<Integer> {
 
     public FlatMapIterator(Iterator<Integer> prevIterator,
                            IntToIntStreamFunction operator) {
+        this.iterator = new StreamIntIterator();
         this.prevIterator = prevIterator;
         this.operator = operator;
-        this.iterator = new StreamIntIterator();
     }
 
     @Override

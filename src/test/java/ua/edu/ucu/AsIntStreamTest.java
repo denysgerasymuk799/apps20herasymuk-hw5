@@ -391,6 +391,13 @@ public class AsIntStreamTest {
         assertArrayEquals(expResult, result);
     }
 
+    /** ============================== Tests for Reduce ============================== */
+    @Test
+    public void testReduce() {
+        int result = intStream.reduce(0, (sum, el) -> sum += el + 1);
+        assertEquals(10, result);
+    }
+
     /** ============================== Tests for ToArray ============================== */
     @Test
     public void testToArray() {
